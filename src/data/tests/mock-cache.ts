@@ -4,19 +4,19 @@ import { SavePurchases } from "@/domain/usecases"
 
 
 export class CacheStoreSpy implements CacheStore  {
-  actions: Array<CacheStoreSpy.Action> = []
-
   deleteKey: string
-
   fetchKey: string
-
   insertKey: string
+
+  actions: Array<CacheStoreSpy.Action> = []
   insertValues: Array<SavePurchases.Params> = []
+  fetchResult: any
 
 
-  fetch (key: string): void {
+  fetch (key: string): any {
     this.actions.push(CacheStoreSpy.Action.fetch)
     this.fetchKey = key
+    return this.fetchResult
   }
 
   delete (key: string): void {
