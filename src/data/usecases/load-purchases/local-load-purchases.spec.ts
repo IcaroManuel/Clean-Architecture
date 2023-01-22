@@ -35,14 +35,12 @@ describe('LocalLoadPurchases', () => {
     const currentDate = new Date()
     const timestamp = getCacheExpirationDate(currentDate)
     timestamp.setSeconds(timestamp.getSeconds() + 1)
-
       const { cacheStore, sut } = makeSut(currentDate)
       cacheStore.fetchResult = {
         timestamp,
         value: mockPurchases()
       }
       const purchases = await sut.loadAll()
-
       expect(cacheStore.actions).toEqual([CacheStoreSpy.Action.fetch])
       expect(cacheStore.fetchKey).toBe('purchases')
       expect(purchases).toEqual(cacheStore.fetchResult.value)
@@ -58,9 +56,8 @@ describe('LocalLoadPurchases', () => {
         value: mockPurchases()
       }
       const purchases = await sut.loadAll()
-      expect(cacheStore.actions).toEqual([CacheStoreSpy.Action.fetch, CacheStoreSpy.Action.delete])
+      expect(cacheStore.actions).toEqual([CacheStoreSpy.Action.fetch])
       expect(cacheStore.fetchKey).toBe('purchases')
-      expect(cacheStore.deleteKey).toBe('purchases')
       expect(purchases).toEqual([])
 })
 
@@ -73,9 +70,8 @@ describe('LocalLoadPurchases', () => {
         value: mockPurchases()
       }
       const purchases = await sut.loadAll()
-      expect(cacheStore.actions).toEqual([CacheStoreSpy.Action.fetch, CacheStoreSpy.Action.delete])
+      expect(cacheStore.actions).toEqual([CacheStoreSpy.Action.fetch])
       expect(cacheStore.fetchKey).toBe('purchases')
-      expect(cacheStore.deleteKey).toBe('purchases')
       expect(purchases).toEqual([])
 })
 
